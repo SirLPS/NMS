@@ -35,7 +35,7 @@ def py_cpu_nms(np.ndarray[np.float32_t,ndim=2] dets, np.float thresh):
     cdef int _i, _j
     
     cdef int i, j
-    
+    cdef np.float32_t xx1, yy1, xx2, yy2
     cdef np.float32_t ix1, iy1, ix2, iy2, iarea
     cdef np.float32_t w, h
     cdef np.float32_t overlap, ious
@@ -62,8 +62,8 @@ def py_cpu_nms(np.ndarray[np.float32_t,ndim=2] dets, np.float thresh):
                 continue
             xx1 = max(ix1, x1[j])
             yy1 = max(iy1, y1[j])
-            xx2 = max(ix2, x2[j])
-            yy2 = max(iy2, y2[j])
+            xx2 = min(ix2, x2[j])
+            yy2 = min(iy2, y2[j])
     
             w = max(0.0, xx2-xx1+1)
             h = max(0.0, yy2-yy1+1)
